@@ -183,6 +183,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+// Add this to your app.js file after the DOMContentLoaded event listener
+
+// Theme Switcher
+function initializeTheme() {
+    const themeToggle = document.createElement('button');
+    themeToggle.className = 'theme-toggle';
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    document.body.appendChild(themeToggle);
+
+    // Get saved theme or default to 'dark'
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Add animation class
+        themeToggle.style.transform = 'rotate(360deg)';
+        
+        // Update theme after rotation
+        setTimeout(() => {
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            themeToggle.style.transform = '';
+        }, 300);
+    });
+}
+
+function updateThemeIcon(theme) {
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+        themeToggle.innerHTML = `<i class="fas fa-${theme === 'dark' ? 'sun' : 'moon'}"></i>`;
+    }
+}
+
+// Initialize theme switcher
+initializeTheme();
 
 // Add this CSS for the fade out animation
 const style = document.createElement('style');
