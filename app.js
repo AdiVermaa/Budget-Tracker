@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return div;
     }
 
-    // Make these functions global so they can be accessed by onclick
     window.handleEdit = function(id) {
         const transaction = transactions.find(t => t.id === id);
         if (transaction) {
@@ -116,10 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.handleDelete = function(id) {
         const transactionElement = document.querySelector(`.transaction-item[data-id="${id}"]`);
         if (transactionElement) {
-            // Add fade out animation
             transactionElement.style.animation = 'fadeOut 0.3s ease-out forwards';
             
-            // Remove element after animation
             setTimeout(() => {
                 transactions = transactions.filter(t => t.id !== id);
                 localStorage.setItem('transactions', JSON.stringify(transactions));
@@ -142,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
         incomeEl.textContent = `₹${income.toFixed(2)}`;
         expensesEl.textContent = `₹${expense.toFixed(2)}`;
 
-        // Update balance card color based on amount
         const balanceCard = balanceEl.closest('.balance-card');
         if (total < 0) {
             balanceCard.style.borderColor = 'var(--danger-color)';
@@ -175,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
         transactionForm.reset();
     }
 
-    // Add keyboard support for closing modal
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && formContainer.classList.contains('active')) {
             formContainer.classList.remove('active');
@@ -183,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-// Add this to your app.js file after the DOMContentLoaded event listener
 
 // Theme Switcher
 function initializeTheme() {
@@ -192,7 +186,6 @@ function initializeTheme() {
     themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
     document.body.appendChild(themeToggle);
 
-    // Get saved theme or default to 'dark'
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
@@ -201,10 +194,8 @@ function initializeTheme() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
-        // Add animation class
         themeToggle.style.transform = 'rotate(360deg)';
         
-        // Update theme after rotation
         setTimeout(() => {
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
@@ -221,10 +212,8 @@ function updateThemeIcon(theme) {
     }
 }
 
-// Initialize theme switcher
 initializeTheme();
 
-// Add this CSS for the fade out animation
 const style = document.createElement('style');
 style.textContent = `
     @keyframes fadeOut {
